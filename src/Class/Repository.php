@@ -2,13 +2,14 @@
 
 use App\Response;
 
-class Repository
-{
-	// Declare Table Names as Constants
-	// This is a good practice to avoid typos in table names and to make it easier to change them in the future.
-	protected const TABLENAME_USER = "Users";
+class Repository {
+	protected const TABLENAME_BOARDTOUSER = "boardToUser";
+	protected const TABLENAME_BOARD = "board";
+	protected const TABLENAME_BOARDTOGROUP = "boardToGroup";
+	protected const TABLENAME_USER = "user";
+	protected const TABLENAME_GROUP = "group";
+	protected const TABLENAME_USERTOGROUP = "userToGroup";
 
-	// Declare some other contants or functions that are used in the repository class
 	protected static $dbHost;
 	protected static $dbName;
 	protected static $dbUser;

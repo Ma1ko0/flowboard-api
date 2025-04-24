@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Board\BoardRepository;
 use App\User\UserRepository;
 
 class InputController extends Controller
@@ -15,19 +16,24 @@ class InputController extends Controller
 		
 		if ($method === "GET") {
 			switch (strtolower($this->getUriParts()[0])) {
+				case "boards":
+					$boardrepo = new BoardRepository();
+					Logger::logging("Test");
+					Response::json([$boardrepo->createBoardForuser(1, "Hello")], 200);
+					return;
 				case "Users":
-					$this->shiftUriParts();
-					if (empty($this->getUriParts())) {
-						Response::error("User ID is required", 400);
-					}
-					$userrepo = new UserRepository();
-					$userId = $this->getUriParts()[0];
-					$user = $userrepo->getUserById($userId);
-					if (empty($user)) {
-						Response::error("User not found", 404);
-					}
-					Logger::logging("User found", INFO);
-					Response::json($user[0], 200);
+						$this->shiftUriParts();
+						if (empty($this->getUriParts())) {
+							Response::error("User ID is required", 400);
+						}
+						$userrepo = new UserRepository();
+						$userId = $this->getUriParts()[0];
+						$user = $userrepo->getUserById($userId);
+						if (empty($user)) {
+							Response::error("User not found", 404);
+						}
+						Logger::logging("User found", INFO);
+						Response::json($user[0], 200);
 				default:
 					break;
 			}
