@@ -8,7 +8,7 @@ class User
 {
 	private int $id;
 
-	private string $username;
+	public string $username;
 
 	private string $email;
 

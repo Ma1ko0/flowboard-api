@@ -4,6 +4,7 @@ namespace App;
 
 use App\Board\BoardRepository;
 use App\User\UserRepository;
+use GroupRepository;
 
 class InputController extends Controller
 {
@@ -34,6 +35,20 @@ class InputController extends Controller
 						}
 						Logger::logging("User found", INFO);
 						Response::json($user->getUsername(), 200);
+				case "groups":
+					$this->shiftUriParts();
+					if (empty($this->getUriParts())) {
+						Response::error("Group ID is required", 400);
+					}
+					$grouprepo = new GroupRepository();
+					$groupId = $this->getUriParts()[0];
+					$group = $grouprepo->getGroupMembers($groupId);
+					if (empty($group)) {
+						Logger::logging("Group not found", ERROR);
+						Response::error("Group not found", 404);
+					}
+					Logger::logging("Group found", INFO);
+					Response::json($group, 200);
 				default:
 					break;
 			}
