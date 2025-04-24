@@ -17,11 +17,10 @@ class InputController extends Controller
 		if ($method === "GET") {
 			switch (strtolower($this->getUriParts()[0])) {
 				case "boards":
-					$boardrepo = new BoardRepository();
-					Logger::logging("Test");
-					Response::json([$boardrepo->createBoardForuser(1, "Hello")], 200);
-					return;
-				case "Users":
+					$this->shiftUriParts();
+					$boardConroller = new BoardsController($this->getMethod(), $this->getUriParts());
+					$boardConroller->processRequest();
+				case "users":
 						$this->shiftUriParts();
 						if (empty($this->getUriParts())) {
 							Response::error("User ID is required", 400);
@@ -30,16 +29,23 @@ class InputController extends Controller
 						$userId = $this->getUriParts()[0];
 						$user = $userrepo->getUserById($userId);
 						if (empty($user)) {
+							Logger::logging("User not found", ERROR);
 							Response::error("User not found", 404);
 						}
 						Logger::logging("User found", INFO);
-						Response::json($user[0], 200);
+						Response::json($user->getUsername(), 200);
 				default:
 					break;
 			}
 			
 		}
 		if ($method === "POST") {
+			switch (strtolower($this->getUriParts()[0])) {
+				case "boards":
+					$boardrepo = new BoardRepository();
+					Logger::logging("Test");
+					Response::json([$boardrepo->createBoardForuser("1", "Hello")], 200);
+			}
 		}
 		Response::error("Method not allowed", 405);
 	}

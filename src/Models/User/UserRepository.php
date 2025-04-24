@@ -33,13 +33,13 @@ class UserRepository extends Repository
 		if (!preg_match("/^[a-zA-Z0-9]+$/", $userId)) {
 			throw new \InvalidArgumentException("User ID contains invalid characters");
 		}
+		$table = self::TABLENAME_USER;
 		$query = <<<SQL
-			SELECT * FROM users WHERE id = ?
+			SELECT * FROM {$table} WHERE id=?
 		SQL;
 		$stmt = $this->databaseConnection->prepare($query);
 		$stmt->execute([$userId]);
 		$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
 		if (sizeof($result) != 1) {
 			throw new UserNotFoundException();
 		}

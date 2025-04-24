@@ -3,12 +3,10 @@
 use App\Response;
 
 class Repository {
-	protected const TABLENAME_BOARDTOUSER = "boardToUser";
-	protected const TABLENAME_BOARD = "board";
-	protected const TABLENAME_BOARDTOGROUP = "boardToGroup";
-	protected const TABLENAME_USER = "user";
-	protected const TABLENAME_GROUP = "group";
-	protected const TABLENAME_USERTOGROUP = "userToGroup";
+	protected const TABLENAME_BOARD = "Boards";
+	protected const TABLENAME_USER = "Users";
+	protected const TABLENAME_GROUP = "Groups";
+	protected const TABLENAME_USERGROUP = "UserGroups";
 
 	protected static $dbHost;
 	protected static $dbName;
